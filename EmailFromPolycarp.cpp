@@ -8,50 +8,35 @@ using namespace std;
 string st, st2;
 void solve()
 {
-  cin>>st;
-  cin>>st2;
-  int l=st.length(),ll=st2.length();
-  if(l<=ll)
-  { 
-    stack <char> ss;
-    int q=0;
-    char prc;
-    loop(i,0,l)
-    {
-      if(st[i]==st2[q] && q<ll)
-      {
-        q++;
-        loop(j,q,ll)
+    cin>>st;
+    cin>>st2;
+    int l=st.length(),ll=st2.length();
+    if(l<=ll)
+    { 
+        stack <char> ss;
+        int q=0;
+        loop(i,0,l)
         {
-          if(st[i]==st2[j])
-          {
-            ss.push(st[i]);q++;
-            if (q>=ll) break;
-            
-          }
-          else break;
+            if(q<ll && st[i]==st2[q])
+            {
+                q++;
+                while(!ss.empty())ss.pop();
+                while(q<ll && st[i]==st2[q])
+                {
+                    ss.push(st[i]);
+                    q++;
+                }
+            }else{
+                if(!ss.empty() && st[i]==ss.top()) ss.pop();
+                else{   
+                    cout<<"NO"<<endl;
+                    return;
+                }
+            }
         }
-      }else
-      {
-        if(!ss.empty())
-        {
-          if(st[i]==ss.top()) {ss.pop();}
-          else
-          {
-            while(!ss.empty()) ss.pop();
-            cout<<"NO"<<endl;
-            return; 
-          }
-        }else
-        {
-          cout<<"NO"<<endl;
-          return;
-        }
-      }
-    }
-    if(q<ll) cout<<"NO"<<endl;
-    else cout<<"YES"<<endl;
-  }else cout<<"NO"<<endl;
+        if(q<ll) cout<<"NO"<<endl;
+        else cout<<"YES"<<endl;
+    }else cout<<"NO"<<endl;
 }
 int main()
 {
